@@ -1,0 +1,37 @@
+.root {
+  position: relative;
+  left: -100px;
+}
+
+.input {
+	width: 350px;
+	height: 50px;
+	border-radius: 10px;
+	padding: 0 35px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	background-color: #f9f9f9;
+  transition: all 0.15s ease-out;
+  font-size: 16px;
+	&:focus {
+		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+		background-color: #f3f3f3;
+	}
+}
+
+.search {
+	position: absolute;
+	left: 5px;
+	top: 13px;
+}
+
+.clear {
+	position: absolute;
+	right: 5px;
+	top: 12px;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: all 0.15s ease-out;
+  &:hover {
+    opacity: 0.8;
+  }
+}

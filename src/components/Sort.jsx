@@ -1,12 +1,18 @@
 import { useState } from 'react';
 
-function Sort() {
+function Sort({ value, onClickSort }) {
 	const [openPopap, setOpenPopap] = useState(false);
-	const [itemPopap, setItemPopap] = useState(0);
-	const list = ['популярности', 'цене', 'алфавиту'];
+	const list = [
+		{ name: 'популярности(DESC)', sort: 'rating' },
+		{ name: 'популярности(ASC)', sort: '-rating' },
+		{ name: 'цене(DESC)', sort: 'price' },
+		{ name: 'цене(ASC)', sort: '-price' },
+		{ name: 'алфавиту(DESC)', sort: 'name' },
+		{ name: 'алфавиту(ASC)', sort: '-name' },
+	];
 
 	const onClickPopap = (i) => {
-		setItemPopap(i);
+		onClickSort(i);
 		setOpenPopap(false);
 	};
 
@@ -25,17 +31,17 @@ function Sort() {
 					/>
 				</svg>
 				<b>Сортировка по:</b>
-				<span onClick={() => setOpenPopap(!openPopap)}>{list[itemPopap]}</span>
+				<span onClick={() => setOpenPopap(!openPopap)}>{value.name}</span>
 			</div>
 			{openPopap && (
 				<div className="sort__popup">
 					<ul>
-						{list.map((item, i) => (
+						{list.map((obj, i) => (
 							<li
-								className={itemPopap === i ? 'active' : ''}
+								className={value.sort === obj.sort ? 'active' : ''}
 								key={i}
-								onClick={() => onClickPopap(i)}>
-								{item}
+								onClick={() => onClickPopap(obj)}>
+								{obj.name}
 							</li>
 						))}
 					</ul>

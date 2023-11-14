@@ -8,11 +8,19 @@ import Sceketon from '../components/PizzaBlock/Sceketon';
 export const Home = () => {
 	const [items, setItems] = React.useState([]);
 	const [loading, setLoading] = React.useState(true);
+	const [categoriesIndex, setCategoriesIndex] = React.useState(0);
+	const [sortIndex, setSortIndex] = React.useState({ name: 'популярности', sort: 'rating' });
 
 	React.useEffect(() => {
 		setLoading(true);
 
-		fetch(`https://653f682d9e8bd3be29e07f76.mockapi.io/items`)
+		const category = categoriesIndex > 0 ? categoriesIndex : '';
+		const sortBy = sortIndex.sort.replace('-', '');
+		const order = sortIndex.sort.includes('-') ? 'asc' : 'desc';
+
+		fetch(
+			`https://653f682d9e8bd3be29e07f76.mockapi.io/items?category=${category}&sortBy=${sortBy}&order=${order}`,
+		)
 			.then((res) => {
 				return res.json();
 			})
@@ -24,14 +32,14 @@ export const Home = () => {
 				alert('Error fatch API');
 			})
 			.finally(() => setLoading(false));
-      window.scrollTo(0, 0)
-	}, []);
+		window.scrollTo(0, 0);
+	}, [categoriesIndex, sortIndex]);
 
 	return (
 		<div className="container">
 			<div className="content__top">
-				<Categories />
-				<Sort />
+				<Categories value={categoriesIndex} onClickCategory={(i) => setCategoriesIndex(i)} />
+				<Sort value={sortIndex} onClickSort={(i) => setSortIndex(i)} />
 			</div>
 			<h2 className="content__title">Все пиццы</h2>
 			<div className="content__items">
@@ -42,3 +50,5 @@ export const Home = () => {
 		</div>
 	);
 };
+
+// 54 05
