@@ -1,15 +1,21 @@
 import React from 'react';
 
+import { SearchContext } from '../App';
+
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
 import PizzaBlock from '../components/PizzaBlock';
 import Sceketon from '../components/PizzaBlock/Sceketon';
+import Paginate from '../components/Paginate';
 
-export const Home = ({ searchValue }) => {
+export const Home = () => {
+	const { searchValue } = React.useContext(SearchContext);
+
 	const [items, setItems] = React.useState([]);
 	const [loading, setLoading] = React.useState(true);
 	const [categoriesIndex, setCategoriesIndex] = React.useState(0);
 	const [sortIndex, setSortIndex] = React.useState({ name: 'популярности', sort: 'rating' });
+	const [paginatePage, setPaginatePage] = React.useState(1);
 
 	React.useEffect(() => {
 		setLoading(true);
@@ -19,7 +25,7 @@ export const Home = ({ searchValue }) => {
 		const order = sortIndex.sort.includes('-') ? 'asc' : 'desc';
 
 		fetch(
-			`https://653f682d9e8bd3be29e07f76.mockapi.io/items?category=${category}&sortBy=${sortBy}&order=${order}`,
+			`https://653f682d9e8bd3be29e07f76.mockapi.io/items?page=${paginatePage}&limit=8&category=${category}&sortBy=${sortBy}&order=${order}`,
 		)
 			.then((res) => {
 				return res.json();
@@ -33,7 +39,7 @@ export const Home = ({ searchValue }) => {
 			})
 			.finally(() => setLoading(false));
 		window.scrollTo(0, 0);
-	}, [categoriesIndex, sortIndex]);
+	}, [categoriesIndex, sortIndex, paginatePage]);
 
 	const filtredItems =
 		items && items.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()));
@@ -46,12 +52,11 @@ export const Home = ({ searchValue }) => {
 			</div>
 			<h2 className="content__title">Все пиццы</h2>
 			<div className="content__items">
-				{(loading ? [...Array(8)] : filtredItems).map((obj, i) =>
+				{(loading ? [...Array(4)] : filtredItems).map((obj, i) =>
 					loading ? <Sceketon key={i} /> : <PizzaBlock key={obj.name} {...obj} />,
 				)}
 			</div>
+			<Paginate onPageChange={(numberPage) => setPaginatePage(numberPage)} />
 		</div>
 	);
 };
-
-// 46:20

@@ -8,7 +8,7 @@ function Categories({value, onClickCategory}) {
 		{ name: 'Вегетарианская' },
 		{ name: 'Гриль' },
 		{ name: 'Острые' },
-		{ name: 'Закрытые' },
+		{ name: 'Микс' },
 	];
 
 	return (

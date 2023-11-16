@@ -6,7 +6,7 @@
 		"types": [0, 1],
 		"sizes": [26, 30, 40],
 		"price": 803,
-		"category": 0,
+		"category": 1,
 		"rating": 4
 	},
 	{
@@ -16,7 +16,7 @@
 		"types": [0],
 		"sizes": [26, 40],
 		"price": 245,
-		"category": 1,
+		"category": 2,
 		"rating": 6
 	},
 	{
@@ -36,7 +36,7 @@
 		"types": [1],
 		"sizes": [26, 30, 40],
 		"price": 275,
-		"category": 2,
+		"category": 1,
 		"rating": 2
 	},
 	{
@@ -56,7 +56,7 @@
 		"types": [0],
 		"sizes": [30, 40],
 		"price": 580,
-		"category": 2,
+		"category": 1,
 		"rating": 2
 	},
 	{
@@ -76,7 +76,7 @@
 		"types": [0, 1],
 		"sizes": [26, 30, 40],
 		"price": 450,
-		"category": 4,
+		"category": 2,
 		"rating": 10
 	},
 	{
@@ -96,7 +96,37 @@
 		"types": [0, 1],
 		"sizes": [26, 30, 40],
 		"price": 285,
-		"category": 5,
+		"category": 2,
 		"rating": 7
+	},
+	{
+		"id": 10,
+		"imageUrl": "https://dodopizza-a.akamaihd.net/static/Img/Products/03c840b1ab6f4ccb84f5dc167e146598_584x584.webp",
+		"name": "Диабло 🌶️🌶️",
+		"types": [0, 1],
+		"sizes": [40],
+		"price": 539,
+		"category": 4,
+		"rating": 6
+	},
+	{
+		"id": 10,
+		"imageUrl": "https://dodopizza-a.akamaihd.net/static/Img/Products/02ca2561953b488993878d1f70e359de_292x292.webp",
+		"name": "Чоризо фреш",
+		"types": [0, 1],
+		"sizes": [40],
+		"price": 539,
+		"category": 4,
+		"rating": 3
+	},
+	{
+		"id": 10,
+		"imageUrl": "https://dodopizza-a.akamaihd.net/static/Img/Products/85479ab2c41e42408d3609dad068d2ef_292x292.webp",
+		"name": "Супер Микс",
+		"types": [0, 1],
+		"sizes": [40],
+		"price": 539,
+		"category": 5,
+		"rating": 8
 	}
 ]

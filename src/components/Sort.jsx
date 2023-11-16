@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function Sort({ value, onClickSort }) {
+function Sort({ value, onClickSort}) {
 	const [openPopap, setOpenPopap] = useState(false);
 	const list = [
 		{ name: 'популярности(DESC)', sort: 'rating' },

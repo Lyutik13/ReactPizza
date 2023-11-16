@@ -1,8 +1,11 @@
 import React from 'react';
 
+import { SearchContext } from '../../App';
 import styles from './SearchPizzas.module.scss';
 
-const SearchPizzas = ({ searchValue, setSearchValue }) => {
+const SearchPizzas = () => {
+  const { searchValue, setSearchValue} = React.useContext(SearchContext)
+
 	return (
 		<div className={styles.root}>
 			<div className={styles.search}>
