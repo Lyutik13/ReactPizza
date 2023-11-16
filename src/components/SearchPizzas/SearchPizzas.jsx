@@ -2,7 +2,7 @@ import React from 'react';
 
 import styles from './SearchPizzas.module.scss';
 
-const SearchPizzas = () => {
+const SearchPizzas = ({ searchValue, setSearchValue }) => {
 	return (
 		<div className={styles.root}>
 			<div className={styles.search}>
@@ -30,12 +30,20 @@ const SearchPizzas = () => {
 					</g>
 				</svg>
 			</div>
-			<input className={styles.input} type="text" placeholder="Поиск пиццы ..." />
+			<input
+				value={searchValue}
+				onChange={(e) => setSearchValue(e.target.value)}
+				className={styles.input}
+				type="text"
+				placeholder="Поиск пиццы ..."
+			/>
 			<div className={styles.clear}>
-				<svg height="24" viewBox="0 0 48 48" width="24" xmlns="http://www.w3.org/2000/svg">
-					<path d="M38 12.83L35.17 10 24 21.17 12.83 10 10 12.83 21.17 24 10 35.17 12.83 38 24 26.83 35.17 38 38 35.17 26.83 24z" />
-					<path d="M0 0h48v48H0z" fill="none" />
-				</svg>
+				{searchValue && (
+					<svg onClick={() => setSearchValue('')} height="24" viewBox="0 0 48 48" width="24" xmlns="http://www.w3.org/2000/svg">
+						<path d="M38 12.83L35.17 10 24 21.17 12.83 10 10 12.83 21.17 24 10 35.17 12.83 38 24 26.83 35.17 38 38 35.17 26.83 24z" />
+						<path d="M0 0h48v48H0z" fill="none" />
+					</svg>
+				)}
 			</div>
 		</div>
 	);
