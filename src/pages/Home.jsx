@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { useSelector, useDispatch } from 'react-redux';
+import { setCategoriesIndex } from '../redux/slice/filterSlice';
+
 import { SearchContext } from '../App';
 
 import Categories from '../components/Categories';
@@ -9,20 +12,27 @@ import Sceketon from '../components/PizzaBlock/Sceketon';
 import Paginate from '../components/Paginate';
 
 export const Home = () => {
-	const { searchValue } = React.useContext(SearchContext);
+	const dispatch = useDispatch();
+	const categoriesIndex = useSelector((state) => state.filter.categoriesIndex);
+  const sortIndex = useSelector((state) => state.filter.sortIndex.sort);
 
+	const { searchValue } = React.useContext(SearchContext);
 	const [items, setItems] = React.useState([]);
 	const [loading, setLoading] = React.useState(true);
-	const [categoriesIndex, setCategoriesIndex] = React.useState(0);
-	const [sortIndex, setSortIndex] = React.useState({ name: 'популярности', sort: 'rating' });
+	// const [categoriesIndex, setCategoriesIndex] = React.useState(0);
+	// const [sortIndex, setSortIndex] = React.useState({ name: 'популярности', sort: 'rating' });
 	const [paginatePage, setPaginatePage] = React.useState(1);
+
+	const onClickCategory = (id) => {
+		dispatch(setCategoriesIndex(id));
+	};
 
 	React.useEffect(() => {
 		setLoading(true);
 
 		const category = categoriesIndex > 0 ? categoriesIndex : '';
-		const sortBy = sortIndex.sort.replace('-', '');
-		const order = sortIndex.sort.includes('-') ? 'asc' : 'desc';
+		const sortBy = sortIndex.replace('-', '');
+		const order = sortIndex.includes('-') ? 'asc' : 'desc';
 
 		fetch(
 			`https://653f682d9e8bd3be29e07f76.mockapi.io/items?page=${paginatePage}&limit=8&category=${category}&sortBy=${sortBy}&order=${order}`,
@@ -47,8 +57,8 @@ export const Home = () => {
 	return (
 		<div className="container">
 			<div className="content__top">
-				<Categories value={categoriesIndex} onClickCategory={(i) => setCategoriesIndex(i)} />
-				<Sort value={sortIndex} onClickSort={(i) => setSortIndex(i)} />
+				<Categories value={categoriesIndex} onClickCategory={onClickCategory} />
+				<Sort />
 			</div>
 			<h2 className="content__title">Все пиццы</h2>
 			<div className="content__items">
