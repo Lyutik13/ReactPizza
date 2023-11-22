@@ -6,7 +6,7 @@ import styles from './SearchPizzas.module.scss';
 
 const SearchPizzas = () => {
 	const [valueInput, setValueInput] = React.useState('');
-	const { searchValue, setSearchValue } = React.useContext(SearchContext);
+	const { setSearchValue } = React.useContext(SearchContext);
 	const inputRef = React.useRef();
 
 	const onClickClear = () => {
@@ -20,7 +20,6 @@ const SearchPizzas = () => {
 	const updateSearchValue = React.useCallback(
 		debounce((str) => {
 			setSearchValue(str);
-			console.log(str);
 		}, 1500),
 		[],
 	);

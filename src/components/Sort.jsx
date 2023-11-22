@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { setSortIndex } from '../redux/slice/filterSlice';
 
-const list = [
+export const list = [
   { name: 'популярности(DESC)', sort: 'rating' },
   { name: 'популярности(ASC)', sort: '-rating' },
   { name: 'цене(DESC)', sort: 'price' },
