@@ -4,27 +4,42 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setSortIndex } from '../redux/slice/filterSlice';
 
 export const list = [
-  { name: 'популярности(DESC)', sort: 'rating' },
-  { name: 'популярности(ASC)', sort: '-rating' },
-  { name: 'цене(DESC)', sort: 'price' },
-  { name: 'цене(ASC)', sort: '-price' },
-  { name: 'алфавиту(DESC)', sort: 'name' },
-  { name: 'алфавиту(ASC)', sort: '-name' },
+	{ name: 'популярности(DESC)', sort: 'rating' },
+	{ name: 'популярности(ASC)', sort: '-rating' },
+	{ name: 'цене(DESC)', sort: 'price' },
+	{ name: 'цене(ASC)', sort: '-price' },
+	{ name: 'алфавиту(DESC)', sort: 'name' },
+	{ name: 'алфавиту(ASC)', sort: '-name' },
 ];
 
 function Sort() {
 	const dispatch = useDispatch();
-  const sortIndex = useSelector((state) => state.filter.sortIndex);
+	const sortIndex = useSelector((state) => state.filter.sortIndex);
 
+	const sortRef = React.useRef();
 	const [openPopap, setOpenPopap] = React.useState(false);
 
 	const onClickPopap = (obj) => {
-    dispatch(setSortIndex(obj))
+		dispatch(setSortIndex(obj));
 		setOpenPopap(false);
 	};
 
+	React.useEffect(() => {
+		const clickOutside = (event) => {
+			if (!event.composedPath().includes(sortRef.current)) {
+				setOpenPopap(false);
+			}
+		};
+
+		document.body.addEventListener('click', clickOutside);
+
+		return () => {
+			document.body.removeEventListener('click', clickOutside);
+		};
+	}, []);
+
 	return (
-		<div className="sort">
+		<div ref={sortRef} className="sort">
 			<div className="sort__label">
 				<svg
 					width="10"
