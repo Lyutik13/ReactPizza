@@ -300,7 +300,7 @@ body {
 	}
 
 	&--empty {
-		margin: 0 auto;
+		margin: 50px auto 50px auto;
 		width: 560px;
 		text-align: center;
 
@@ -316,7 +316,7 @@ body {
 			color: #777777;
 		}
 
-		icon {
+		span {
 			position: relative;
 			top: 2px;
 		}
