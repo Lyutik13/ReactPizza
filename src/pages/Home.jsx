@@ -1,10 +1,10 @@
 import React from 'react';
-import axios from 'axios';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoriesIndex, setPaginatePage, setFiltersUrl } from '../redux/slice/filterSlice';
+import { fetchPizzas } from '../redux/slice/pizzasSlice';
 
 import { SearchContext } from '../App';
 
@@ -24,10 +24,11 @@ export const Home = () => {
 	const categoriesIndex = useSelector((state) => state.filter.categoriesIndex);
 	const sortIndex = useSelector((state) => state.filter.sortIndex.sort);
 	const paginatePage = useSelector((state) => state.filter.paginatePage);
+	const { items, status } = useSelector((state) => state.pizzas);
 
 	const { searchValue } = React.useContext(SearchContext);
-	const [items, setItems] = React.useState([]);
-	const [loading, setLoading] = React.useState(true);
+	// const [loading, setLoading] = React.useState(true);
+	// const [items, setItems] = React.useState([]);
 	// const [categoriesIndex, setCategoriesIndex] = React.useState(0);
 	// const [sortIndex, setSortIndex] = React.useState({ name: 'популярности', sort: 'rating' });
 	// const [paginatePage, setPaginatePage] = React.useState(1);
@@ -41,38 +42,15 @@ export const Home = () => {
 		dispatch(setPaginatePage(numberPage));
 	};
 
-	const fetchPizzas = () => {
-		setLoading(true);
-
+	const getPizzas = async () => {
 		const category = categoriesIndex > 0 ? categoriesIndex : '';
 		const sortBy = sortIndex.replace('-', '');
 		const order = sortIndex.includes('-') ? 'asc' : 'desc';
 		const search = searchValue ? `&search=${searchValue}` : '';
 
-		/* 		fetch(
-			`https://653f682d9e8bd3be29e07f76.mockapi.io/items?page=${paginatePage}&limit=8&category=${category}&sortBy=${sortBy}&order=${order}`,
-		)
-			.then((res) => {
-				return res.json();
-			})
-			.then((json) => {
-				setItems(json);
-			})
-			.catch((err) => {
-				console.warn(err);
-				alert('Error fatch API');
-			})
-			.finally(() => setLoading(false)); */
+		dispatch(fetchPizzas({ category, sortBy, order, search, paginatePage }));
 
-		// BAck mocAPI хрень, не комбинирует. либо (category sortBy) / либо search поэтому сделал filtredItems для фильтрации не через бэк а вручную на фронте
-		axios
-			.get(
-				`https://653f682d9e8bd3be29e07f76.mockapi.io/items?page=${paginatePage}&limit=8${search}&category=${category}&sortBy=${sortBy}&order=${order}`,
-			)
-			.then((res) => {
-				setItems(res.data);
-				setLoading(false);
-			});
+		window.scrollTo(0, 0);
 	};
 
 	// Если изменили параметры и был первый рендер
@@ -84,6 +62,7 @@ export const Home = () => {
 		}
 
 		isMounted.current = true;
+		// eslint-disable-next-line
 	}, [categoriesIndex, paginatePage, sortIndex]);
 
 	// Если был первый рендер, то проверяем URl-параметры и сохраняем в Redux
@@ -95,21 +74,24 @@ export const Home = () => {
 			dispatch(setFiltersUrl({ ...params, sortIndex }));
 			isSearch.current = true;
 		}
+		// eslint-disable-next-line
 	}, []);
 
 	// Если был первый рендер, то запрашиваем пиццы
 	React.useEffect(() => {
-		window.scrollTo(0, 0);
-
 		if (!isSearch.current) {
-			fetchPizzas();
+			getPizzas();
 		}
 
 		isSearch.current = false;
+		// eslint-disable-next-line
 	}, [categoriesIndex, paginatePage, sortIndex, searchValue]);
 
 	const filtredItems =
 		items && items.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()));
+
+	const pizzas = filtredItems.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+	const skeletons = [...new Array(6)].map((_, i) => <Sceketon key={i} />);
 
 	return (
 		<div className="container">
@@ -118,11 +100,22 @@ export const Home = () => {
 				<Sort />
 			</div>
 			<h2 className="content__title">Все пиццы</h2>
-			<div className="content__items">
-				{(loading ? [...Array(4)] : filtredItems).map((obj, i) =>
-					loading ? <Sceketon key={i} /> : <PizzaBlock key={obj.name} {...obj} />,
-				)}
-			</div>
+			{status === 'error' ? (
+				<div className="content__error-info">
+          <div className='sadSmail'>😕</div>
+					<h2>
+						Произошла ошибка 
+					</h2>
+					<p>
+						Не удалось загрузить пиццы.
+						<br />
+						Попробуйте чуть попозже.
+					</p>
+				</div>
+			) : (
+				<div className="content__items">{status === 'loading' ? skeletons : pizzas}</div>
+			)}
+
 			<Paginate paginatePage={paginatePage} onPageChange={onPageChange} />
 		</div>
 	);
