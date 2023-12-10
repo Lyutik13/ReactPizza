@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setCategoriesIndex, setPaginatePage, setFiltersUrl } from '../redux/slice/filterSlice';
 import { fetchPizzas } from '../redux/slice/pizzasSlice';
 
-import { SearchContext } from '../App';
+// import { SearchContext } from '../App';
 
 import Categories from '../components/Categories';
 import Sort from '../components/Sort';
@@ -25,8 +25,9 @@ export const Home = () => {
 	const sortIndex = useSelector((state) => state.filter.sortIndex.sort);
 	const paginatePage = useSelector((state) => state.filter.paginatePage);
 	const { items, status } = useSelector((state) => state.pizzas);
+	const searchValue = useSelector((state) => state.filter.searchValue);
 
-	const { searchValue } = React.useContext(SearchContext);
+	// const { searchValue } = React.useContext(SearchContext);
 	// const [loading, setLoading] = React.useState(true);
 	// const [items, setItems] = React.useState([]);
 	// const [categoriesIndex, setCategoriesIndex] = React.useState(0);
@@ -102,10 +103,8 @@ export const Home = () => {
 			<h2 className="content__title">Все пиццы</h2>
 			{status === 'error' ? (
 				<div className="content__error-info">
-          <div className='sadSmail'>😕</div>
-					<h2>
-						Произошла ошибка 
-					</h2>
+					<div className="sadSmail">😕</div>
+					<h2>Произошла ошибка</h2>
 					<p>
 						Не удалось загрузить пиццы.
 						<br />

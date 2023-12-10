@@ -1,16 +1,21 @@
 import React from 'react';
 import debounce from 'lodash.debounce';
+import { useDispatch } from 'react-redux';
 
-import { SearchContext } from '../../App';
+import { setSearchValue } from '../../redux/slice/filterSlice';
+
+// import { SearchContext } from '../../App';
 import styles from './SearchPizzas.module.scss';
 
 const SearchPizzas = () => {
+	const dispatch = useDispatch();
+
 	const [valueInput, setValueInput] = React.useState('');
-	const { setSearchValue } = React.useContext(SearchContext);
+	// const { setSearchValue } = React.useContext(SearchContext);
 	const inputRef = React.useRef();
 
 	const onClickClear = () => {
-		setSearchValue('');
+		dispatch(setSearchValue(''));
 		setValueInput('');
 		// document.querySelector('input').focus();
 		inputRef.current.focus();
@@ -19,7 +24,7 @@ const SearchPizzas = () => {
 	// eslint-disable-next-line
 	const updateSearchValue = React.useCallback(
 		debounce((str) => {
-			setSearchValue(str);
+			dispatch(setSearchValue(str));
 		}, 1500),
 		[],
 	);
