@@ -1,7 +1,7 @@
 import React from 'react';
 import ContentLoader from 'react-content-loader';
 
-const Sceketon = (props) => (
+const Sceketon:React.FC = (props) => (
 	<ContentLoader
 		className="pizza-block"
 		speed={0}

@@ -28,16 +28,12 @@ const cartSlice = createSlice({
 				});
 			}
 
-			state.totalPrice = state.items.reduce((sum, obj) => {
-				return obj.price * obj.count + sum;
-			}, 0);
+			state.totalPrice = state.items.reduce((sum, obj) => obj.price * obj.count + sum, 0);
 
-			state.totalCount = state.items.reduce((sum, obj) => {
-				return obj.count + sum;
-			}, 0);
+			state.totalCount = state.items.reduce((sum, obj) => obj.count + sum, 0);
 		},
 
-    // bag
+		// bag
 		minusItems(state, action) {
 			const findItem = state.items.find((obj) => obj.id === action.payload);
 
@@ -54,12 +50,12 @@ const cartSlice = createSlice({
 			}, 0);
 		},
 
-    // bag
+		// bag
 		delItems(state, action) {
 			state.items = state.items.filter((obj) => obj.id !== action.payload);
 		},
 
-		clearItems(state, action) {
+		clearItems(state) {
 			state.items = [];
 			state.totalPrice = 0;
 			state.totalCount = 0;

@@ -3,7 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { setSortIndex } from '../redux/slice/filterSlice';
 
-export const list = [
+type SortList = {
+	name: string;
+	sort: string;
+};
+
+export const list: SortList[] = [
 	{ name: 'популярности(DESC)', sort: 'rating' },
 	{ name: 'популярности(ASC)', sort: '-rating' },
 	{ name: 'цене(DESC)', sort: 'price' },
@@ -12,20 +17,20 @@ export const list = [
 	{ name: 'алфавиту(ASC)', sort: '-name' },
 ];
 
-function Sort() {
+const Sort:React.FC = () => {
 	const dispatch = useDispatch();
-	const sortIndex = useSelector((state) => state.filter.sortIndex);
+	const sortIndex = useSelector((state: any) => state.filter.sortIndex);
 
-	const sortRef = React.useRef();
-	const [openPopap, setOpenPopap] = React.useState(false);
+	const sortRef = React.useRef<HTMLDivElement>(null);
+	const [openPopap, setOpenPopap] = React.useState<boolean>(false);
 
-	const onClickPopap = (obj) => {
+	const onClickPopap = (obj: SortList) => {
 		dispatch(setSortIndex(obj));
 		setOpenPopap(false);
 	};
 
 	React.useEffect(() => {
-		const clickOutside = (event) => {
+		const clickOutside = (event: any) => {
 			if (!event.composedPath().includes(sortRef.current)) {
 				setOpenPopap(false);
 			}

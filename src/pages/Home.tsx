@@ -15,17 +15,17 @@ import Sceketon from '../components/PizzaBlock/Sceketon';
 import Paginate from '../components/Paginate';
 import { list } from '../components/Sort';
 
-export const Home = () => {
+export const Home: React.FC = () => {
 	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const isSearch = React.useRef(false);
 	const isMounted = React.useRef(false);
 
-	const categoriesIndex = useSelector((state) => state.filter.categoriesIndex);
-	const sortIndex = useSelector((state) => state.filter.sortIndex.sort);
-	const paginatePage = useSelector((state) => state.filter.paginatePage);
-	const { items, status } = useSelector((state) => state.pizzas);
-	const searchValue = useSelector((state) => state.filter.searchValue);
+	const categoriesIndex = useSelector((state: any) => state.filter.categoriesIndex);
+	const sortIndex = useSelector((state: any) => state.filter.sortIndex.sort);
+	const paginatePage = useSelector((state: any) => state.filter.paginatePage);
+	const { items, status } = useSelector((state: any) => state.pizzas);
+	const searchValue = useSelector((state: any) => state.filter.searchValue);
 
 	// const { searchValue } = React.useContext(SearchContext);
 	// const [loading, setLoading] = React.useState(true);
@@ -34,12 +34,12 @@ export const Home = () => {
 	// const [sortIndex, setSortIndex] = React.useState({ name: 'популярности', sort: 'rating' });
 	// const [paginatePage, setPaginatePage] = React.useState(1);
 
-	const onClickCategory = (id) => {
+	const onClickCategory = (id: number) => {
 		dispatch(setCategoriesIndex(id));
 		dispatch(setPaginatePage(1));
 	};
 
-	const onPageChange = (numberPage) => {
+	const onPageChange = (numberPage: number) => {
 		dispatch(setPaginatePage(numberPage));
 	};
 
@@ -49,7 +49,10 @@ export const Home = () => {
 		const order = sortIndex.includes('-') ? 'asc' : 'desc';
 		const search = searchValue ? `&search=${searchValue}` : '';
 
-		dispatch(fetchPizzas({ category, sortBy, order, search, paginatePage }));
+		dispatch(
+			//@ts-ignore
+			fetchPizzas({ category, sortBy, order, search, paginatePage }),
+		);
 
 		window.scrollTo(0, 0);
 	};
@@ -89,9 +92,9 @@ export const Home = () => {
 	}, [categoriesIndex, paginatePage, sortIndex, searchValue]);
 
 	const filtredItems =
-		items && items.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()));
+		items && items.filter((item: any) => item.name.toLowerCase().includes(searchValue.toLowerCase()));
 
-	const pizzas = filtredItems.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
+	const pizzas = filtredItems.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
 	const skeletons = [...new Array(6)].map((_, i) => <Sceketon key={i} />);
 
 	return (
