@@ -7,11 +7,16 @@ import { Provider } from 'react-redux';
 import './index.css';
 import App from './App';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-	<Router>
-		<Provider store={store}>
-			<App />
-		</Provider>
-	</Router>,
-);
+const rootElem = document.getElementById('root');
+
+if (rootElem) {
+	const root = ReactDOM.createRoot(rootElem);
+
+	root.render(
+		<Router>
+			<Provider store={store}>
+				<App />
+			</Provider>
+		</Router>,
+	);
+}

@@ -1,6 +1,6 @@
 import React from 'react';
 import qs from 'qs';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoriesIndex, setPaginatePage, setFiltersUrl } from '../redux/slice/filterSlice';
@@ -91,7 +91,7 @@ export const Home = () => {
 	const filtredItems =
 		items && items.filter((item) => item.name.toLowerCase().includes(searchValue.toLowerCase()));
 
-	const pizzas = filtredItems.map((obj) => <Link key={obj.id} to={`item/${obj.id}`}><PizzaBlock {...obj} /></Link>);
+	const pizzas = filtredItems.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
 	const skeletons = [...new Array(6)].map((_, i) => <Sceketon key={i} />);
 
 	return (

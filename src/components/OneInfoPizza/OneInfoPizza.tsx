@@ -4,10 +4,10 @@ import axios from 'axios';
 
 import style from './OneInfoPizza.module.scss';
 
-export const OneInfoPizza = () => {
+export const OneInfoPizza: React.FC = () => {
 	let { id } = useParams();
 	const navigate = useNavigate();
-	const [onePizza, setOnePizza] = useState('');
+	const [onePizza, setOnePizza] = useState<{ imageUrl: string; name: string; price: number }>();
 
 	useEffect(() => {
 		async function fetchOnePizza() {
@@ -22,7 +22,7 @@ export const OneInfoPizza = () => {
 		}
 
 		fetchOnePizza();
-    // eslint-disable-next-line
+		// eslint-disable-next-line
 	}, []);
 
 	if (!onePizza) {
