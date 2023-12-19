@@ -21,7 +21,7 @@ const SearchPizzas: React.FC = () => {
 		// if (inputRef.current) {
 		// 	inputRef.current.focus();
 		// }
-    inputRef.current?.focus();
+		inputRef.current?.focus();
 	};
 
 	// eslint-disable-next-line
@@ -32,10 +32,11 @@ const SearchPizzas: React.FC = () => {
 		[],
 	);
 
-	const onChangeInput = (event: any) => {
+	const onChangeInput = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setValueInput(event.target.value);
 		updateSearchValue(event.target.value);
 	};
+
 	return (
 		<div className={styles.root}>
 			<div className={styles.search}>

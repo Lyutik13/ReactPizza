@@ -5,7 +5,7 @@ import styles from './Paginate.module.scss';
 
 type PaginateProps = {
 	paginatePage: number;
-	onPageChange: any;
+	onPageChange: (page: number) => void;
 };
 
 const Paginate: React.FC<PaginateProps> = ({ paginatePage, onPageChange }) => {

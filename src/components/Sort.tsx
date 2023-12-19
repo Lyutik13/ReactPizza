@@ -17,7 +17,7 @@ export const list: SortList[] = [
 	{ name: 'алфавиту(ASC)', sort: '-name' },
 ];
 
-const Sort:React.FC = () => {
+const Sort: React.FC = () => {
 	const dispatch = useDispatch();
 	const sortIndex = useSelector((state: any) => state.filter.sortIndex);
 
@@ -30,8 +30,8 @@ const Sort:React.FC = () => {
 	};
 
 	React.useEffect(() => {
-		const clickOutside = (event: any) => {
-			if (!event.composedPath().includes(sortRef.current)) {
+		const clickOutside = (event: MouseEvent) => {
+			if (sortRef.current && !event.composedPath().includes(sortRef.current)) {
 				setOpenPopap(false);
 			}
 		};
@@ -76,6 +76,6 @@ const Sort:React.FC = () => {
 			)}
 		</div>
 	);
-}
+};
 
 export default Sort;
