@@ -14,18 +14,19 @@ import PizzaBlock from '../components/PizzaBlock';
 import Sceketon from '../components/PizzaBlock/Sceketon';
 import Paginate from '../components/Paginate';
 import { list } from '../components/Sort';
+import { RootState, useAppDispatch } from '../redux/store';
 
 export const Home: React.FC = () => {
-	const dispatch = useDispatch();
+	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const isSearch = React.useRef(false);
 	const isMounted = React.useRef(false);
 
-	const categoriesIndex = useSelector((state: any) => state.filter.categoriesIndex);
-	const sortIndex = useSelector((state: any) => state.filter.sortIndex.sort);
-	const paginatePage = useSelector((state: any) => state.filter.paginatePage);
-	const { items, status } = useSelector((state: any) => state.pizzas);
-	const searchValue = useSelector((state: any) => state.filter.searchValue);
+	const categoriesIndex = useSelector((state: RootState) => state.filter.categoriesIndex);
+	const sortIndex = useSelector((state: RootState) => state.filter.sortIndex.sort);
+	const paginatePage = useSelector((state: RootState) => state.filter.paginatePage);
+	const { items, status } = useSelector((state: RootState) => state.pizzas);
+	const searchValue = useSelector((state: RootState) => state.filter.searchValue);
 
 	// const { searchValue } = React.useContext(SearchContext);
 	// const [loading, setLoading] = React.useState(true);
@@ -44,14 +45,19 @@ export const Home: React.FC = () => {
 	};
 
 	const getPizzas = async () => {
-		const category = categoriesIndex > 0 ? categoriesIndex : '';
+		const category = categoriesIndex > 0 ? String(categoriesIndex) : '';
 		const sortBy = sortIndex.replace('-', '');
 		const order = sortIndex.includes('-') ? 'asc' : 'desc';
 		const search = searchValue ? `&search=${searchValue}` : '';
 
 		dispatch(
-			//@ts-ignore
-			fetchPizzas({ category, sortBy, order, search, paginatePage }),
+			fetchPizzas({
+				sortBy,
+				order,
+				category,
+				search,
+				paginatePage: String(paginatePage),
+			}),
 		);
 
 		window.scrollTo(0, 0);
@@ -92,7 +98,8 @@ export const Home: React.FC = () => {
 	}, [categoriesIndex, paginatePage, sortIndex, searchValue]);
 
 	const filtredItems =
-		items && items.filter((item: any) => item.name.toLowerCase().includes(searchValue.toLowerCase()));
+		items &&
+		items.filter((item: any) => item.name.toLowerCase().includes(searchValue.toLowerCase()));
 
 	const pizzas = filtredItems.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
 	const skeletons = [...new Array(6)].map((_, i) => <Sceketon key={i} />);

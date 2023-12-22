@@ -5,12 +5,12 @@ import { addItems, minusItems, delItems } from '../redux/slice/cartSlice';
 
 type CartItemProps = {
 	id: string;
-  imageUrl: string;
   name: string;
-  types: number[];
-  sizes: number[];
+  types: string;
+  sizes: number;
   price: number;
   count: number;
+  imageUrl: string;
 };
 
 const CartItem: React.FC<CartItemProps> = ({ id, imageUrl, name, types, sizes, price, count }) => {

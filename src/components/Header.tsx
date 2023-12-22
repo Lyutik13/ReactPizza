@@ -4,9 +4,10 @@ import { useSelector } from 'react-redux';
 
 import logoImg from '../assets/img/pizza-logo.svg';
 import SearchPizzas from './SearchPizzas/SearchPizzas';
+import { RootState } from '../redux/store';
 
 const Header:React.FC = () => {
-	const { totalPrice, totalCount } = useSelector((state: any) => state.cart);
+	const { totalPrice, totalCount } = useSelector((state: RootState) => state.cart);
 	let { pathname } = useLocation();
 
 	return (

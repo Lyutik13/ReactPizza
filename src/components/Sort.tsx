@@ -2,6 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { setSortIndex } from '../redux/slice/filterSlice';
+import { RootState } from '../redux/store';
 
 type SortList = {
 	name: string;
@@ -19,7 +20,7 @@ export const list: SortList[] = [
 
 const Sort: React.FC = () => {
 	const dispatch = useDispatch();
-	const sortIndex = useSelector((state: any) => state.filter.sortIndex);
+	const sortIndex = useSelector((state: RootState) => state.filter.sortIndex);
 
 	const sortRef = React.useRef<HTMLDivElement>(null);
 	const [openPopap, setOpenPopap] = React.useState<boolean>(false);
