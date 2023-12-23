@@ -27,7 +27,15 @@ const initialState: PizzasSliceState = {
 	status: Status.LOADING, // loading | success | error
 };
 
-export const fetchPizzas = createAsyncThunk<Pizza[], Record<string, string>>(
+export type SearchPizzaParams = {
+	sortBy: string;
+	order: string;
+	category: string;
+	search: string;
+	paginatePage: string;
+};
+
+export const fetchPizzas = createAsyncThunk<Pizza[], SearchPizzaParams>(
 	'pizzas/fetchPizzasStatus',
 	async (props) => {
 		const { category, sortBy, order, search, paginatePage } = props;

@@ -1,21 +1,21 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setSortIndex } from '../redux/slice/filterSlice';
+import { SortPropertyEnum, setSortIndex } from '../redux/slice/filterSlice';
 import { RootState } from '../redux/store';
 
-type SortList = {
+type SortItem = {
 	name: string;
-	sort: string;
+	sort: SortPropertyEnum;
 };
 
-export const list: SortList[] = [
-	{ name: 'популярности(DESC)', sort: 'rating' },
-	{ name: 'популярности(ASC)', sort: '-rating' },
-	{ name: 'цене(DESC)', sort: 'price' },
-	{ name: 'цене(ASC)', sort: '-price' },
-	{ name: 'алфавиту(DESC)', sort: 'name' },
-	{ name: 'алфавиту(ASC)', sort: '-name' },
+export const list: SortItem[] = [
+	{ name: 'популярности(DESC)', sort: SortPropertyEnum.RATING_DESC },
+	{ name: 'популярности(ASC)', sort: SortPropertyEnum.RATING_ASC },
+	{ name: 'цене(DESC)', sort: SortPropertyEnum.PRICE_DESC },
+	{ name: 'цене(ASC)', sort: SortPropertyEnum.PRICE_ASC },
+	{ name: 'алфавиту(DESC)', sort: SortPropertyEnum.NAME_DESC },
+	{ name: 'алфавиту(ASC)', sort: SortPropertyEnum.NAME_ASC },
 ];
 
 const Sort: React.FC = () => {
@@ -25,7 +25,7 @@ const Sort: React.FC = () => {
 	const sortRef = React.useRef<HTMLDivElement>(null);
 	const [openPopap, setOpenPopap] = React.useState<boolean>(false);
 
-	const onClickPopap = (obj: SortList) => {
+	const onClickPopap = (obj: SortItem) => {
 		dispatch(setSortIndex(obj));
 		setOpenPopap(false);
 	};

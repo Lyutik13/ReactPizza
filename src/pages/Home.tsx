@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
 import { setCategoriesIndex, setPaginatePage, setFiltersUrl } from '../redux/slice/filterSlice';
-import { fetchPizzas } from '../redux/slice/pizzasSlice';
+import { SearchPizzaParams, fetchPizzas } from '../redux/slice/pizzasSlice';
 
 // import { SearchContext } from '../App';
 
@@ -64,28 +64,27 @@ export const Home: React.FC = () => {
 	};
 
 	// Если изменили параметры и был первый рендер
-	React.useEffect(() => {
+/* 	React.useEffect(() => {
 		if (isMounted.current) {
-			const queryString = qs.stringify({ categoriesIndex, paginatePage, sortIndex });
+			const params = {
+				categoriesIndex: categoriesIndex > 0 ? categoriesIndex : null,
+				sortIndex: sortIndex,
+				paginatePage,
+			};
 
-			navigate(`?${queryString}`);
+			const queryString = qs.stringify(params, { skipNulls: true });
+
+			navigate(`/?${queryString}`);
+		}
+
+		if (!window.location.search) {
+			console.log(111);
+			dispatch(fetchPizzas({} as SearchPizzaParams));
 		}
 
 		isMounted.current = true;
 		// eslint-disable-next-line
-	}, [categoriesIndex, paginatePage, sortIndex]);
-
-	// Если был первый рендер, то проверяем URl-параметры и сохраняем в Redux
-	React.useEffect(() => {
-		if (window.location.search) {
-			const params = qs.parse(window.location.search.substring(1));
-			const sortIndex = list.find((obj) => obj.sort === params.sortIndex);
-
-			dispatch(setFiltersUrl({ ...params, sortIndex }));
-			isSearch.current = true;
-		}
-		// eslint-disable-next-line
-	}, []);
+	}, [categoriesIndex, paginatePage, sortIndex, searchValue]); */
 
 	// Если был первый рендер, то запрашиваем пиццы
 	React.useEffect(() => {
@@ -97,6 +96,26 @@ export const Home: React.FC = () => {
 		// eslint-disable-next-line
 	}, [categoriesIndex, paginatePage, sortIndex, searchValue]);
 
+	// Парсим параметры при первом рендере
+/* 	React.useEffect(() => {
+		if (window.location.search) {
+			const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzaParams;
+			const sortIndex = list.find((obj) => obj.sort === params.sortBy);
+
+			dispatch(
+				setFiltersUrl({
+					searchValue: params.search,
+					categoriesIndex: Number(params.category),
+					paginatePage: Number(params.paginatePage),
+					sortIndex: sortIndex || list[0]
+				}),
+			);
+			isSearch.current = true;
+		}
+		isMounted.current = true;
+		// eslint-disable-next-line
+	}, []);
+ */
 	const filtredItems =
 		items &&
 		items.filter((item: any) => item.name.toLowerCase().includes(searchValue.toLowerCase()));
