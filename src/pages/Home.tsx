@@ -23,7 +23,7 @@ export const Home: React.FC = () => {
 	const isMounted = React.useRef(false);
 
 	const categoriesIndex = useSelector((state: RootState) => state.filter.categoriesIndex);
-	const sortIndex = useSelector((state: RootState) => state.filter.sortIndex.sort);
+	const sortIndex = useSelector((state: RootState) => state.filter.sortIndex);
 	const paginatePage = useSelector((state: RootState) => state.filter.paginatePage);
 	const { items, status } = useSelector((state: RootState) => state.pizzas);
 	const searchValue = useSelector((state: RootState) => state.filter.searchValue);
@@ -35,10 +35,10 @@ export const Home: React.FC = () => {
 	// const [sortIndex, setSortIndex] = React.useState({ name: 'популярности', sort: 'rating' });
 	// const [paginatePage, setPaginatePage] = React.useState(1);
 
-	const onClickCategory = (id: number) => {
+	const onClickCategory = React.useCallback((id: number) => {
 		dispatch(setCategoriesIndex(id));
 		dispatch(setPaginatePage(1));
-	};
+	}, []);
 
 	const onPageChange = (numberPage: number) => {
 		dispatch(setPaginatePage(numberPage));
@@ -46,8 +46,8 @@ export const Home: React.FC = () => {
 
 	const getPizzas = async () => {
 		const category = categoriesIndex > 0 ? String(categoriesIndex) : '';
-		const sortBy = sortIndex.replace('-', '');
-		const order = sortIndex.includes('-') ? 'asc' : 'desc';
+		const sortBy = sortIndex.sort.replace('-', '');
+		const order = sortIndex.sort.includes('-') ? 'asc' : 'desc';
 		const search = searchValue ? `&search=${searchValue}` : '';
 
 		dispatch(
@@ -64,7 +64,7 @@ export const Home: React.FC = () => {
 	};
 
 	// Если изменили параметры и был первый рендер
-/* 	React.useEffect(() => {
+	/* 	React.useEffect(() => {
 		if (isMounted.current) {
 			const params = {
 				categoriesIndex: categoriesIndex > 0 ? categoriesIndex : null,
@@ -97,7 +97,7 @@ export const Home: React.FC = () => {
 	}, [categoriesIndex, paginatePage, sortIndex, searchValue]);
 
 	// Парсим параметры при первом рендере
-/* 	React.useEffect(() => {
+	/* 	React.useEffect(() => {
 		if (window.location.search) {
 			const params = qs.parse(window.location.search.substring(1)) as unknown as SearchPizzaParams;
 			const sortIndex = list.find((obj) => obj.sort === params.sortBy);
@@ -127,7 +127,7 @@ export const Home: React.FC = () => {
 		<div className="container">
 			<div className="content__top">
 				<Categories value={categoriesIndex} onClickCategory={onClickCategory} />
-				<Sort />
+				<Sort sortValue={sortIndex}/>
 			</div>
 			<h2 className="content__title">Все пиццы</h2>
 			{status === 'error' ? (

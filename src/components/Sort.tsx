@@ -1,12 +1,16 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import {  useDispatch } from 'react-redux';
+import { useWhyDidYouUpdate } from 'ahooks';
 
-import { SortPropertyEnum, setSortIndex } from '../redux/slice/filterSlice';
-import { RootState } from '../redux/store';
+import { SortPropertyEnum, SortType, setSortIndex } from '../redux/slice/filterSlice';
 
 type SortItem = {
 	name: string;
 	sort: SortPropertyEnum;
+};
+
+type SortValueProps = {
+	sortValue: SortType;
 };
 
 export const list: SortItem[] = [
@@ -18,11 +22,14 @@ export const list: SortItem[] = [
 	{ name: 'алфавиту(ASC)', sort: SortPropertyEnum.NAME_ASC },
 ];
 
-const Sort: React.FC = () => {
-	const dispatch = useDispatch();
-	const sortIndex = useSelector((state: RootState) => state.filter.sortIndex);
+const Sort: React.FC<SortValueProps> = React.memo(({ sortValue }) => {
+  useWhyDidYouUpdate('Sort', { sortValue })
+  console.log('render');
+  
 
+	const dispatch = useDispatch();
 	const sortRef = React.useRef<HTMLDivElement>(null);
+
 	const [openPopap, setOpenPopap] = React.useState<boolean>(false);
 
 	const onClickPopap = (obj: SortItem) => {
@@ -59,14 +66,14 @@ const Sort: React.FC = () => {
 					/>
 				</svg>
 				<b>Сортировка по:</b>
-				<span onClick={() => setOpenPopap(!openPopap)}>{sortIndex.name}</span>
+				<span onClick={() => setOpenPopap(!openPopap)}>{sortValue.name}</span>
 			</div>
 			{openPopap && (
 				<div className="sort__popup">
 					<ul>
 						{list.map((obj, i) => (
 							<li
-								className={sortIndex.sort === obj.sort ? 'active' : ''}
+								className={sortValue.sort === obj.sort ? 'active' : ''}
 								key={i}
 								onClick={() => onClickPopap(obj)}>
 								{obj.name}
@@ -77,6 +84,6 @@ const Sort: React.FC = () => {
 			)}
 		</div>
 	);
-};
+});
 
 export default Sort;
