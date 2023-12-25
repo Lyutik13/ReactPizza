@@ -6,9 +6,20 @@ import logoImg from '../assets/img/pizza-logo.svg';
 import SearchPizzas from './SearchPizzas/SearchPizzas';
 import { RootState } from '../redux/store';
 
-const Header:React.FC = () => {
-	const { totalPrice, totalCount } = useSelector((state: RootState) => state.cart);
+const Header: React.FC = () => {
+	const { totalPrice, items, totalCount } = useSelector((state: RootState) => state.cart);
 	let { pathname } = useLocation();
+	const isMounted = React.useRef(false);
+
+  // Добавления даных выбраного item в Local storage и проверка при первом рендере 
+	React.useEffect(() => {
+		if (isMounted.current) {
+			const json = JSON.stringify(items);
+			localStorage.setItem('cart', json);
+		}
+
+		isMounted.current = true;
+	}, [items]);
 
 	return (
 		<div className="header">
@@ -65,6 +76,6 @@ const Header:React.FC = () => {
 			</div>
 		</div>
 	);
-}
+};
 
 export default Header;

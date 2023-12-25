@@ -1,25 +1,16 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-export type CartItem = {
-	id: string;
-	name: string;
-	price: number;
-	types: string;
-	sizes: number;
-  count: number;
-	imageUrl: string;
-};
+import { getCartFromLocalStorage } from '../../utils/getCartFromLocalStorage';
+import { calcTotalPrice } from '../../utils/calcTotalPrice';
+import { calcTotalCount } from '../../utils/calcTotalCount';
+import { CartItem, CartSliceState } from './types';
 
-interface CartSliceState {
-	totalPrice: number;
-	totalCount: number;
-	items: CartItem[];
-}
+const { items, totalPrice, totalCount } = getCartFromLocalStorage();
 
 const initialState: CartSliceState = {
-	totalPrice: 0,
-	totalCount: 0,
-	items: [],
+	items,
+	totalPrice,
+	totalCount,
 };
 
 const cartSlice = createSlice({
@@ -32,7 +23,7 @@ const cartSlice = createSlice({
 		//     return obj.price + sum
 		//   }, 0)
 		// },
-		addItems(state, action:PayloadAction<CartItem>) {
+		addItems(state, action: PayloadAction<CartItem>) {
 			const findItem = state.items.find((obj) => obj.id === action.payload.id);
 
 			if (findItem) {
@@ -44,13 +35,13 @@ const cartSlice = createSlice({
 				});
 			}
 
-			state.totalPrice = state.items.reduce((sum, obj) => obj.price * obj.count + sum, 0);
+			state.totalPrice = calcTotalPrice(state.items);
 
-			state.totalCount = state.items.reduce((sum, obj) => obj.count + sum, 0);
+			state.totalCount = calcTotalCount(state.items);
 		},
 
 		// bag
-		minusItems(state, action:PayloadAction<string>) {
+		minusItems(state, action: PayloadAction<string>) {
 			const findItem = state.items.find((obj) => obj.id === action.payload);
 
 			if (findItem) {
@@ -67,7 +58,7 @@ const cartSlice = createSlice({
 		},
 
 		// bag
-		delItems(state, action:PayloadAction<string>) {
+		delItems(state, action: PayloadAction<string>) {
 			state.items = state.items.filter((obj) => obj.id !== action.payload);
 		},
 

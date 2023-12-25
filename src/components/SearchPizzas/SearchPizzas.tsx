@@ -2,7 +2,7 @@ import React from 'react';
 import debounce from 'lodash.debounce';
 import { useDispatch } from 'react-redux';
 
-import { setSearchValue } from '../../redux/slice/filterSlice';
+import { setSearchValue } from '../../redux/filter/slice';
 
 // import { SearchContext } from '../../App';
 import styles from './SearchPizzas.module.scss';

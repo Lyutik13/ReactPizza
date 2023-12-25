@@ -1,8 +1,8 @@
 import React from 'react';
 import {  useDispatch } from 'react-redux';
-import { useWhyDidYouUpdate } from 'ahooks';
 
-import { SortPropertyEnum, SortType, setSortIndex } from '../redux/slice/filterSlice';
+import { setSortIndex } from '../redux/filter/slice';
+import { SortPropertyEnum, SortType } from '../redux/filter/types';
 
 type SortItem = {
 	name: string;
@@ -23,10 +23,6 @@ export const list: SortItem[] = [
 ];
 
 const Sort: React.FC<SortValueProps> = React.memo(({ sortValue }) => {
-  useWhyDidYouUpdate('Sort', { sortValue })
-  console.log('render');
-  
-
 	const dispatch = useDispatch();
 	const sortRef = React.useRef<HTMLDivElement>(null);
 

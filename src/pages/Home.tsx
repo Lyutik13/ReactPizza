@@ -3,8 +3,9 @@ import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
-import { setCategoriesIndex, setPaginatePage, setFiltersUrl } from '../redux/slice/filterSlice';
-import { SearchPizzaParams, fetchPizzas } from '../redux/slice/pizzasSlice';
+import { setCategoriesIndex, setPaginatePage, setFiltersUrl } from '../redux/filter/slice';
+import { fetchPizzas } from '../redux/pizza/asyncActions';
+import { SearchPizzaParams } from '../redux/pizza/types';
 
 // import { SearchContext } from '../App';
 
