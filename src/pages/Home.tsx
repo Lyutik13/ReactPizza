@@ -1,21 +1,17 @@
 import React from 'react';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
-
 import { useSelector, useDispatch } from 'react-redux';
+
+import { RootState, useAppDispatch } from '../redux/store';
 import { setCategoriesIndex, setPaginatePage, setFiltersUrl } from '../redux/filter/slice';
 import { fetchPizzas } from '../redux/pizza/asyncActions';
 import { SearchPizzaParams } from '../redux/pizza/types';
 
 // import { SearchContext } from '../App';
 
-import Categories from '../components/Categories';
-import Sort from '../components/Sort';
-import PizzaBlock from '../components/PizzaBlock';
-import Sceketon from '../components/PizzaBlock/Sceketon';
-import Paginate from '../components/Paginate';
+import { Categories, Sort, PizzaBlock, Sceketon, Paginate } from '../components';
 import { list } from '../components/Sort';
-import { RootState, useAppDispatch } from '../redux/store';
 
 export const Home: React.FC = () => {
 	const dispatch = useAppDispatch();
@@ -128,7 +124,7 @@ export const Home: React.FC = () => {
 		<div className="container">
 			<div className="content__top">
 				<Categories value={categoriesIndex} onClickCategory={onClickCategory} />
-				<Sort sortValue={sortIndex}/>
+				<Sort sortValue={sortIndex} />
 			</div>
 			<h2 className="content__title">Все пиццы</h2>
 			{status === 'error' ? (

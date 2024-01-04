@@ -1,0 +1,10 @@
+export { default as NotFoundBlock } from '../components/NotFoundBlock/NotFoundBlock';
+export { default as Paginate } from '../components/Paginate';
+export { default as PizzaBlock } from '../components/PizzaBlock';
+export { default as Sceketon } from '../components/PizzaBlock/Sceketon';
+export { default as SearchPizzas } from '../components/SearchPizzas/SearchPizzas';
+export { default as CartItem } from '../components/CartItem';
+export { default as Categories } from '../components/Categories';
+export { default as EmptyCart } from '../components/EmptyCart';
+export { default as Header } from '../components/Header';
+export { default as Sort } from '../components/Sort';

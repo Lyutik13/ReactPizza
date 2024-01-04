@@ -3,7 +3,8 @@ import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
 import logoImg from '../assets/img/pizza-logo.svg';
-import SearchPizzas from './SearchPizzas/SearchPizzas';
+// import SearchPizzas from './SearchPizzas/SearchPizzas';
+import { SearchPizzas } from '../components';
 import { RootState } from '../redux/store';
 
 const Header: React.FC = () => {
@@ -11,7 +12,7 @@ const Header: React.FC = () => {
 	let { pathname } = useLocation();
 	const isMounted = React.useRef(false);
 
-  // Добавления даных выбраного item в Local storage и проверка при первом рендере 
+	// Добавления даных выбраного item в Local storage и проверка при первом рендере
 	React.useEffect(() => {
 		if (isMounted.current) {
 			const json = JSON.stringify(items);
