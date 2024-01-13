@@ -36,7 +36,6 @@ const cartSlice = createSlice({
 			}
 
 			state.totalPrice = calcTotalPrice(state.items);
-
 			state.totalCount = calcTotalCount(state.items);
 		},
 
@@ -48,18 +47,16 @@ const cartSlice = createSlice({
 				findItem.count--;
 			}
 
-			// state.totalPrice = state.items.reduce((sum, obj) => {
-			// 	return obj.price * obj.count - sum;
-			// }, 0);
-
-			// state.totalCount = state.items.reduce((sum, obj) => {
-			// 	return obj.count - sum;
-			// }, 0);
+      state.totalPrice = calcTotalPrice(state.items);
+			state.totalCount = calcTotalCount(state.items);
 		},
 
 		// bag
 		delItems(state, action: PayloadAction<string>) {
 			state.items = state.items.filter((obj) => obj.id !== action.payload);
+
+      state.totalPrice = calcTotalPrice(state.items);
+			state.totalCount = calcTotalCount(state.items);
 		},
 
 		clearItems(state) {
